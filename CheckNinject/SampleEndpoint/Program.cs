@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Ninject;
 using NServiceBus;
+using NServiceBus.UnitOfWork;
 
 namespace SampleEndpoint
 {
@@ -10,12 +12,10 @@ namespace SampleEndpoint
         {
             Console.Title = "SampleEndpoint";
 
-            var endpointConfiguration = new EndpointConfiguration("SampleEndpoint");
-            endpointConfiguration.UseTransport<LearningTransport>();
-            endpointConfiguration.UsePersistence<LearningPersistence>();
-            endpointConfiguration.UseContainer<NinjectBuilder>();
-
-            var endpoint = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
+            var kernel = new StandardKernel();
+            kernel.Bind<IManageUnitsOfWork, UnitOfWorkProviderAdaptor>().To<UnitOfWorkProviderAdaptor>();
+            kernel.Bind<IBusSettingsConfiguration>().To<BusSettingsConfiguration>();
+            var endpoint = EndpointBuilder.Build(kernel);
 
             Console.WriteLine("Started");
 

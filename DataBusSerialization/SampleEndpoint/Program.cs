@@ -3,8 +3,8 @@
     using System;
     using System.Threading.Tasks;
     using Messages;
+    using Newtonsoft.Json;
     using NServiceBus;
-    using NServiceBus.ObjectBuilder;
 
     class Program
     {
@@ -14,7 +14,12 @@
             const string dataBusPath = @"C:\Temp\DataBus";
 
             var config = new EndpointConfiguration("SampleEndpoint");
-            config.UseSerialization<NewtonsoftSerializer>();
+            var serialization = config.UseSerialization<NewtonsoftSerializer>();
+            serialization.Settings(new JsonSerializerSettings
+            {
+                ContractResolver = new SkipConstructorContractResolver(),
+                TypeNameHandling = TypeNameHandling.Auto
+            });
             config.UseTransport<RabbitMQTransport>()
                 .UseDirectRoutingTopology()
                 .ConnectionString(connectionString);

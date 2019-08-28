@@ -30,11 +30,10 @@
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
-                await endpoint.Publish(new EventWithProp
-                {
-                    PrimaryId = Guid.NewGuid().ToString(),
-                    Data = new DataBusProperty<byte[]>(new byte[] {1, 2, 3, 4, 5})
-                });
+                await endpoint.Publish(new EventWithProp( 
+                    primaryId: Guid.NewGuid().ToString(),
+                    data: new byte[] {1, 2, 3, 4, 5}
+                ));
             }
 
             await endpoint.Stop();

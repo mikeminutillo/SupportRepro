@@ -19,6 +19,9 @@
             config.UsePersistence<LearningPersistence>();
             config.UseSerialization<NewtonsoftSerializer>();
 
+            config.Pipeline.Register(new IncomingLogicalMessageSpy(), "Spies on messages at the logical stage");
+            config.Pipeline.Register(new IncomingPhysicalMessageSpy(), "Spies on messages at the physical stage");
+
             config.EnableInstallers();
 
             var endpoint = await Endpoint.Start(config)

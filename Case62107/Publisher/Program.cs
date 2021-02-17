@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+    using Api;
     using Messages;
     using NServiceBus;
 
@@ -27,7 +28,7 @@
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
-                await endpoint.Publish<ClientGewijzigdChangedEvent>()
+                await endpoint.Publish<ClientGewijzigdEvent>()
                     .ConfigureAwait(false);
                 Console.WriteLine("Event Published");
             }

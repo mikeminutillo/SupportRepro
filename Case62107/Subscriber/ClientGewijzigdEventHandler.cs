@@ -5,9 +5,9 @@
     using Messages;
     using NServiceBus;
 
-    public class ClientGewijzigdEventHandler : IHandleMessages<ClientGewijzigdChangedEvent>
+    public class ClientGewijzigdEventHandler : IHandleMessages<IClientGewijzigdEvent>
     {
-        public Task Handle(ClientGewijzigdChangedEvent message, IMessageHandlerContext context)
+        public Task Handle(IClientGewijzigdEvent message, IMessageHandlerContext context)
         {
             Console.WriteLine("Event Handled");
             return Task.CompletedTask;

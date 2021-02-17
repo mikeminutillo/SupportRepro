@@ -2,7 +2,7 @@
 {
     using NServiceBus;
 
-    public interface IClientGewijzigdEvent : IEvent
+    public interface IClientGewijzigdEvent : IRegelGewijzigdEvent<ClientRegelData>
     {
 
     }
@@ -12,12 +12,7 @@
 
     }
 
-    public interface IRegelGewijzigdEvent<TData>
-    {
-
-    }
-
-    public class ClientGewijzigdChangedEvent : IRegelGewijzigdEvent<ClientRegelData>, IClientGewijzigdEvent
+    public interface IRegelGewijzigdEvent<TData> : IEvent
     {
 
     }

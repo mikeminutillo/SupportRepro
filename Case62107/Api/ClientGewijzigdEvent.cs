@@ -2,7 +2,7 @@
 {
     using Messages;
 
-    public class ClientGewijzigdEvent : IRegelGewijzigdEvent<ClientRegelData>, IClientGewijzigdEvent
+    public class ClientGewijzigdEvent : IClientGewijzigdEvent
     {
 
     }

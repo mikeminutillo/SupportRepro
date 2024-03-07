@@ -1,4 +1,5 @@
 using Contracts;
+using NSB.Extensions;
 using NServiceBus;
 using System;
 
@@ -10,6 +11,7 @@ endpointConfiguration.UseSerialization<SystemJsonSerializer>();
 endpointConfiguration.UseTransport(new LearningTransport());
 endpointConfiguration.Conventions().DefiningEventsAs(t =>
     t.Namespace?.Contains("Contracts", StringComparison.InvariantCultureIgnoreCase) == true);
+endpointConfiguration.MapEnclosedMessageTypes().Add(typeof(SomethingMoreHappened));
 
 var endpointInstance = await Endpoint.Start(endpointConfiguration);
 

@@ -95,10 +95,7 @@ namespace NSB.Extensions
         /// </summary>
         /// <param name="type"></param>
         /// <exception cref="Exception"></exception>
-        public void Add(Type type) => Types.Add(
-            type.FullName ?? throw new Exception($"{type.Name} does not have a valid FullName"),
-            type.AssemblyQualifiedName ?? throw new Exception($"{type.Name} does not have a valid AssemblyQualifiedName")
-        );
+        public void Add(Type type) => Add(type, type);
 
         /// <summary>
         /// Perform a complete type replacement.
@@ -108,8 +105,18 @@ namespace NSB.Extensions
         /// <exception cref="Exception">For invalid types</exception>
         public void Add(Type mapFrom, Type mapTo) => Types.Add(
             mapFrom.FullName ?? throw new Exception($"{mapFrom.Name} does not have a valid FullName"),
-            mapTo.AssemblyQualifiedName ?? throw new Exception($"{mapTo.Name} does not have a valid AssemblyQualifiedName")
+            mapTo.AssemblyQualifiedName ??
+            throw new Exception($"{mapTo.Name} does not have a valid AssemblyQualifiedName")
         );
+
+
+        public void AddMany(IEnumerable<Type> assemblyTypes)
+        {
+            foreach (var type in assemblyTypes)
+            {
+                Add(type);
+            }
+        }
     }
 
     public static class EnclosedMessageTypesMappingConfigurationExtensions

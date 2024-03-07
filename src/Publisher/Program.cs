@@ -1,6 +1,6 @@
-using System;
 using Contracts;
 using NServiceBus;
+using System;
 
 var endpointName = "Publisher";
 Console.Title = endpointName;
@@ -14,6 +14,8 @@ var endpointInstance = await Endpoint.Start(endpointConfiguration);
 Console.WriteLine("Press enter to publish a message");
 Console.WriteLine("Press any key to exit");
 
+int i = 0;
+
 while (true)
 {
     var key = Console.ReadKey();
@@ -23,13 +25,29 @@ while (true)
         break;
     }
 
-    await endpointInstance.Publish<ISomethingMoreHappened>(sh =>
+    /*if (i % 2 == 0)
     {
-        sh.SomeData = 1;
-        sh.MoreInfo = "It's a secret.";
+        await endpointInstance.Publish<ISomethingMoreHappened>(sh =>
+        {
+            sh.SomeData = 1;
+            sh.MoreInfo = "It's a secret.";
+            sh.Child = new ComplexChild();
+        });
+    }
+    else
+    {
+
+    }*/
+
+    await endpointInstance.Publish(new SomethingMoreHappened
+    {
+        SomeData = 1,
+        MoreInfo = "It's a secret.",
+        Child = new ComplexChild(),
     });
 
     Console.WriteLine("Published event.");
+    i++;
 }
 
 await endpointInstance.Stop();

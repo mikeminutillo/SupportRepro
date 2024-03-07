@@ -6,5 +6,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\V1.Contracts\Contracts.csproj" />
+    <PackageReference Include="NServiceBus" Version="8.*" />
   </ItemGroup>
 </Project>

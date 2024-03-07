@@ -1,8 +1,7 @@
 ﻿namespace Contracts
 {
-    using NServiceBus;
 
-    public interface ISomethingHappened : IEvent
+    public interface ISomethingHappened
     {
         int SomeData { get; set; }
         IComplexChild Child { get; }

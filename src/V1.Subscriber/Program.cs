@@ -1,5 +1,5 @@
-using System;
 using NServiceBus;
+using System;
 
 var endpointName = "V1.Subscriber";
 Console.Title = endpointName;
@@ -7,6 +7,8 @@ Console.Title = endpointName;
 var endpointConfiguration = new EndpointConfiguration(endpointName);
 endpointConfiguration.UseSerialization<SystemJsonSerializer>();
 endpointConfiguration.UseTransport(new LearningTransport());
+endpointConfiguration.Conventions().DefiningMessagesAs(t =>
+    t.Namespace?.Contains("Contracts", StringComparison.InvariantCultureIgnoreCase) == true);
 
 var endpointInstance = await Endpoint.Start(endpointConfiguration);
 

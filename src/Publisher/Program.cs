@@ -8,6 +8,8 @@ Console.Title = endpointName;
 var endpointConfiguration = new EndpointConfiguration(endpointName);
 endpointConfiguration.UseSerialization<SystemJsonSerializer>();
 endpointConfiguration.UseTransport(new LearningTransport());
+endpointConfiguration.Conventions().DefiningEventsAs(t =>
+    t.Namespace?.Contains("Contracts", StringComparison.InvariantCultureIgnoreCase) == true);
 
 var endpointInstance = await Endpoint.Start(endpointConfiguration);
 

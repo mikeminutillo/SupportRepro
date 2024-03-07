@@ -1,10 +1,8 @@
 ﻿namespace Contracts
 {
-    using NServiceBus;
-
     #region V1Message
 
-    public interface ISomethingHappened : IEvent
+    public interface ISomethingHappened
     {
         int SomeData { get; set; }
 
